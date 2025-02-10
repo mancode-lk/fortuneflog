@@ -283,10 +283,17 @@ if(!isset($_SESSION['admin_id'])){
 
 
                         <li class="slide">
-                            <a href="addlessons.php" class="side-menu__item">
+                            <a href="categories.php" class="side-menu__item">
                                 <i class="ri-add-box-line side-menu__icon"></i>
                                 <!-- <i class="ri-hotel-line"></i> -->
-                                <span class="side-menu__label">Add Lessons</span>
+                                <span class="side-menu__label">Add Category</span>
+                            </a>
+                        </li>
+                        <li class="slide">
+                            <a href="products.php" class="side-menu__item">
+                                <i class="ri-add-box-line side-menu__icon"></i>
+                                <!-- <i class="ri-hotel-line"></i> -->
+                                <span class="side-menu__label">Add Product</span>
                             </a>
                         </li>
 

@@ -7,7 +7,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "db_bio_green_wrap";
+$dbname = "db_fortuneflog";
 
 
 
