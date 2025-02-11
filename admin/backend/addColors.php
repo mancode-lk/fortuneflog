@@ -7,15 +7,15 @@ include 'conn.php';
     // Validate input
     $productId=$_REQUEST['productId'];
     
-    $feature_text =$_REQUEST['feature_text'];
+    $color =$_REQUEST['color'];
 
-    if (!$productId || empty($feature_text) ) {
+    if (!$productId || empty($color)) {
         throw new Exception('Invalid input data');
     }
 
     // Use prepared statement
-    $stmt = $conn->prepare("INSERT INTO tbl_features (feature_text, product_id) VALUES (?, ?)");
-    $stmt->bind_param("si", $feature_text, $productId);
+    $stmt = $conn->prepare("INSERT INTO tbl_color (color_name, product_id) VALUES (?, ?)");
+    $stmt->bind_param("si", $color, $productId);
     
     if (!$stmt->execute()) {
         throw new Exception('Failed to insert data: ' . $stmt->error);

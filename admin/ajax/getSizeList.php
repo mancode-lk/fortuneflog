@@ -5,7 +5,7 @@ include '../backend/conn.php';
 $productId = $_REQUEST['productId'];
 
 // Fetch details from database
-$sql = "SELECT * FROM tbl_advance_details WHERE product_id = '$productId'";
+$sql = "SELECT * FROM tbl_sizes WHERE product_id = '$productId'";
 $rs = $conn->query($sql);
 ?>
 
@@ -14,8 +14,7 @@ $rs = $conn->query($sql);
     <thead class="table-dark">
         <tr>
             <th>#</th>
-            <th>Heading</th>
-            <th>Description</th>
+            <th>Size</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -27,11 +26,10 @@ $rs = $conn->query($sql);
         ?>
         <tr>
             <td><?= $count++ ?></td>
-            <td><?= htmlspecialchars($row['ad_heading']) ?></td>
-            <td><?= htmlspecialchars($row['ad_description']) ?></td>
+            <td><?= htmlspecialchars($row['size']) ?></td>
             <td>
                
-                <button class="btn btn-sm btn-danger" onclick="deleteDetail(<?= $row['ad_id'] ?>,<?= $productId ?>)">Delete</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteSize(<?= $row['size_id'] ?>,<?= $productId ?>)">Delete</button>
             </td>
         </tr>
         <?php 

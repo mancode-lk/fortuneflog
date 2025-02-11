@@ -31,7 +31,7 @@ $rs = $conn->query($sql);
             <td><?= htmlspecialchars($row['spec_value']) ?></td>
             <td>
                
-                <button class="btn btn-sm btn-danger" onclick="deleteSpecs(<?= $row['spec_id'] ?>)">Delete</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteSpecs(<?= $row['spec_id'] ?>,<?= $productId ?>)">Delete</button>
             </td>
         </tr>
         <?php 

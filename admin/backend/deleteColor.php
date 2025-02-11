@@ -1,11 +1,11 @@
 <?php
 include 'conn.php';
 
-$featureId = $_POST['featureId'] ?? 0;
+$colorId = $_POST['colorId'] ?? 0;
 
-$sqlDelete = "DELETE FROM tbl_features WHERE feature_id   = ?";
+$sqlDelete = "DELETE FROM tbl_color WHERE col_id   = ?";
 $stmt = $conn->prepare($sqlDelete);
-$stmt->bind_param("i", $featureId);
+$stmt->bind_param("i", $colorId);
 $success = $stmt->execute();
 
 echo json_encode(["success" => $success, "message" => $success ? "Detail deleted successfully" : "Error deleting detail"]);
