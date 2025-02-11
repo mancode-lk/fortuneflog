@@ -1,9 +1,5 @@
 <?php
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 43b95d84d43eeab6cb38e0fe15725c2f40c9027a
 date_default_timezone_set('Asia/Dubai');
 session_start();
 

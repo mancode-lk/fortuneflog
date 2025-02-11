@@ -48,7 +48,7 @@
                                             $productType = $rowProduct['p_type'] == 1 ? "Antique" : "Retro";
                                             $mainImagePath = "uploads/products/" . htmlspecialchars($rowProduct['p_image']);
 
-                                      
+
 
                                             // Fetch additional images from tbl_images
                                             $sqlImages = "SELECT * FROM tbl_images WHERE product_id = $productId";
@@ -84,9 +84,7 @@
                                                 <td>$<?= $productPrice ?></td>
                                                 <td><?= $productAge ?>+</td>
                                                 <td><?= $productType ?></td>
-<<<<<<< HEAD
-                                               
-=======
+
                                                 <td>
                                                     <!-- Display Features -->
                                                     <?php if (!empty($features)) { ?>
@@ -106,7 +104,6 @@
                                                     <!-- Button to Add/Edit Features -->
                                                     <button class="btn btn-sm btn-primary" onclick="openAddFeaturesModal(<?= $productId ?>)">Add Features</button>
                                                 </td>
->>>>>>> 43b95d84d43eeab6cb38e0fe15725c2f40c9027a
                                                 <td><button class="btn btn-sm btn-primary" onclick="openAddMoreDetailsModal(<?= $productId ?>)">Add More Details</button>
                                                 </td>
                                                 <td>
@@ -637,12 +634,11 @@ function deleteSpecs(specId, productId) {
 }
 
 
-<<<<<<< HEAD
 function addFeature() {
     // Retrieve form values
     var productId = document.getElementById("productId").value;
     var feature_text = document.getElementById("feature_text").value;
-    
+
     // Validate input values
     if (!feature_text) {
         alert("Both Specs and Details are required.");
@@ -709,7 +705,7 @@ function addColor() {
     // Retrieve form values
     var productId = document.getElementById("productId").value;
     var color = document.getElementById("color").value;
-    
+
     // Validate input values
     if (!color) {
         alert("colour is required.");
@@ -778,7 +774,7 @@ function addSize() {
     // Retrieve form values
     var productId = document.getElementById("productId").value;
     var size = document.getElementById("size").value;
-    
+
     // Validate input values
     if (!size) {
         alert("size is required.");
@@ -921,6 +917,3 @@ function deleteOffer(offerId, productId) {
 
 
 </script>
-=======
-</script>
->>>>>>> 43b95d84d43eeab6cb38e0fe15725c2f40c9027a
