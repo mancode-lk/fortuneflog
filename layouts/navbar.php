@@ -69,7 +69,7 @@
                             <span class="title">QUICKLINKS</span>
                             <ul>
                                 <li>
-                                    <a href="my-account.php">My Account</a>
+                                    <a href="#my-account.php">My Account</a>
                                 </li>
                                 <li>
                                     <a href="#">Initiate return</a>
@@ -82,9 +82,9 @@
                                 </li>
                             </ul>
                             <div class="login-btn">
-                                <a href="sign-in.php" class="axil-btn btn-bg-primary">Login</a>
+                                <a href="#sign-in.php" class="axil-btn btn-bg-primary">Login</a>
                             </div>
-                            <div class="reg-footer text-center">No account yet? <a href="sign-up.php" class="btn-link">REGISTER HERE.</a></div>
+                            <div class="reg-footer text-center">No account yet? <a href="#sign-up.php" class="btn-link">REGISTER HERE.</a></div>
                         </div>
                     </li>
                     <li class="axil-mobile-toggle">
