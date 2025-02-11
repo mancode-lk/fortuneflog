@@ -84,26 +84,6 @@
                                                 <td>$<?= $productPrice ?></td>
                                                 <td><?= $productAge ?>+</td>
                                                 <td><?= $productType ?></td>
-
-                                                <td>
-                                                    <!-- Display Features -->
-                                                    <?php if (!empty($features)) { ?>
-                                                        <ul>
-                                                            <?php foreach ($features as $feature) { ?>
-                                                                <li><?= $feature ?>  <button class="btn btn-sm btn-danger"
-                                                                onclick="deleteFeature(<?= $featureId ?>)">
-                                                            <i class="ri-delete-bin-line"></i>
-                                                        </button></li>
-
-                                                            <?php } ?>
-                                                        </ul>
-                                                    <?php } else { ?>
-                                                        <p>No features added</p>
-                                                    <?php } ?>
-
-                                                    <!-- Button to Add/Edit Features -->
-                                                    <button class="btn btn-sm btn-primary" onclick="openAddFeaturesModal(<?= $productId ?>)">Add Features</button>
-                                                </td>
                                                 <td><button class="btn btn-sm btn-primary" onclick="openAddMoreDetailsModal(<?= $productId ?>)">Add More Details</button>
                                                 </td>
                                                 <td>
