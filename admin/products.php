@@ -84,11 +84,35 @@
                                                 <td>$<?= $productPrice ?></td>
                                                 <td><?= $productAge ?>+</td>
                                                 <td><?= $productType ?></td>
+<<<<<<< HEAD
                                                
+=======
+                                                <td>
+                                                    <!-- Display Features -->
+                                                    <?php if (!empty($features)) { ?>
+                                                        <ul>
+                                                            <?php foreach ($features as $feature) { ?>
+                                                                <li><?= $feature ?>  <button class="btn btn-sm btn-danger"
+                                                                onclick="deleteFeature(<?= $featureId ?>)">
+                                                            <i class="ri-delete-bin-line"></i>
+                                                        </button></li>
+
+                                                            <?php } ?>
+                                                        </ul>
+                                                    <?php } else { ?>
+                                                        <p>No features added</p>
+                                                    <?php } ?>
+
+                                                    <!-- Button to Add/Edit Features -->
+                                                    <button class="btn btn-sm btn-primary" onclick="openAddFeaturesModal(<?= $productId ?>)">Add Features</button>
+                                                </td>
+>>>>>>> 43b95d84d43eeab6cb38e0fe15725c2f40c9027a
                                                 <td><button class="btn btn-sm btn-primary" onclick="openAddMoreDetailsModal(<?= $productId ?>)">Add More Details</button>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-sm btn-warning" onclick="openModalEditProduct(<?= $productId ?>, '<?= $productTitle ?>', '<?= $productDescription ?>', <?= $rowProduct['p_price'] ?>, <?= $productAge ?>, <?= $rowProduct['p_type'] ?>)">Edit</button>
+                                                    <button class="btn btn-sm btn-warning"
+                                                            onclick="openModalEditProduct(<?= $productId ?>, '<?= $productTitle ?>', '<?= $productDescription ?>', <?= $rowProduct['p_price'] ?>, <?= $productAge ?>, <?= $rowProduct['p_type'] ?>)"
+                                                            >Edit</button>
                                                     <button class="btn btn-sm btn-danger" onclick="deleteProduct(<?= $productId ?>, '<?= $productTitle ?>')">Delete</button>
                                                 </td>
                                             </tr>
@@ -101,6 +125,83 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Structure -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 mb-3" id="add_category">
+                      <form method="post" action="backend/addProduct.php" enctype="multipart/form-data">
+                        <input type="hidden" id="edit_product_id" name="product_id" value="">
+                          <div class="form-group mb-3">
+                              <label for="pTitle" class="form-label fw-semibold">Product Title</label>
+                              <input
+                                  type="text"
+                                  name="pTitle"
+                                  id="edit_pTitle"
+                                  class="form-control shadow-sm border-primary"
+                                  placeholder="Enter product title"
+                                  required>
+                          </div>
+                          <div class="form-group mb-3">
+                              <label for="pDescription" class="form-label fw-semibold">Product Description</label>
+                              <textarea
+                                  name="pDescription"
+                                  id="edit_pDescription"
+                                  class="form-control shadow-sm border-primary"
+                                  rows="3"
+                                  placeholder="Enter product description"
+                                  required></textarea>
+                          </div>
+                          <div class="form-group mb-3">
+                              <label for="pPrice" class="form-label fw-semibold">Product Price</label>
+                              <input
+                                  type="number"
+                                  name="pPrice"
+                                  id="edit_pPrice"
+                                  class="form-control shadow-sm border-primary"
+                                  placeholder="Enter product price"
+                                  step="0.01"
+                                  required>
+                          </div>
+                          <div class="form-group mb-3">
+                              <label for="pAge" class="form-label fw-semibold">Product Age</label>
+                              <input
+                                  type="number"
+                                  name="pAge"
+                                  id="edit_pAge"
+                                  class="form-control shadow-sm border-primary"
+                                  placeholder="Enter age suitability"
+                                  required>
+                          </div>
+                          <div class="form-group mb-3">
+                              <label for="pType" class="form-label fw-semibold">Product Type</label>
+                              <select
+                                  name="pType"
+                                  id="edit_pType"
+                                  class="form-control shadow-sm border-primary"
+                                  required>
+                                  <option value="0">Antique</option>
+                                  <option value="1">Retro</option>
+                              </select>
+                          </div>
+                          <div class="d-grid">
+                              <button
+                                  type="submit"
+                                  class="btn btn-primary btn-lg shadow-sm">
+                                  Add Product
+                              </button>
+                          </div>
+                      </form>
                     </div>
                 </div>
             </div>
@@ -225,7 +326,21 @@
 
 <?php include("layout/footer.php"); ?>
 
+
 <script>
+
+function openModalEditProduct(productId, productTitle, productDescription, productPrice, productAge, productType) {
+
+    $('#editProductModal').modal('show');
+
+    document.getElementById("edit_product_id").value = productId;
+    document.getElementById("edit_pTitle").value = productTitle;
+    document.getElementById("edit_pDescription").value = productDescription;
+    document.getElementById("edit_pPrice").value = productPrice;
+    document.getElementById("edit_pAge").value = productAge;
+    document.getElementById("edit_pType").value = productType;
+}
+
 function openAddMoreImagesModal(productId) {
     document.getElementById('addMoreImagesProductId').value = productId;
     var addMoreImagesModal = new bootstrap.Modal(document.getElementById('addMoreImagesModal'));
@@ -264,24 +379,24 @@ function openAddOfferModal(productId){
 
 function openAddMoreDetailsModal(productId) {
     // Load content into modal
-   
+
     $('#addMoreDetailsModal .modal-content').load('ajax/addMoreDetails.php', {productId: productId}, function() {
         // Initialize tabs after content loads
         $('#getAdvanceList').load('ajax/getAdvanceList.php', { productId: productId });
         const tabTriggerList = [].slice.call(this.querySelectorAll('[data-bs-toggle="tab"]'));
         tabTriggerList.forEach(tabTriggerEl => new bootstrap.Tab(tabTriggerEl));
-        
+
         // Load existing details
         loadExistingDetails(productId);
     });
-   
+
     $('#addMoreDetailsModal').modal('show');
 }
 
 function loadExistingDetails(productId) {
     // Load existing advance details
     $('#featuresList').load('../backend/getAdvanceDetails.php', {productId: productId});
-    
+
     // Load existing specifications
     $('#specsList').load('../backend/getSpecifications.php', {productId: productId});
 }
@@ -323,7 +438,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function openModelAddProducts() {
     $('#showModal').modal('show');
     $('#add_category').load('ajax/addProducts.php');
-    
+
 }
 
 function deleteProduct(productId, productTitle) {
@@ -356,7 +471,7 @@ function deleteProduct(productId, productTitle) {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "backend/deleteFeature.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        
+
         xhr.onload = function() {
             if (xhr.status === 200) {
                 const response = xhr.responseText.trim();
@@ -371,11 +486,11 @@ function deleteProduct(productId, productTitle) {
                 alert("Request failed with status: " + xhr.status);
             }
         };
-        
+
         xhr.onerror = function() {
             alert("Request failed");
         };
-        
+
         xhr.send("feature_id=" + encodeURIComponent(featureId));
     }
 }
@@ -387,7 +502,7 @@ function addProduct() {
     var productId = document.getElementById("productId").value;
     var desc = document.getElementById("desc").value;
     var heading = document.getElementById("heading").value;
-    
+
     // Validate input values
     if (!heading || !desc) {
         alert("Both Heading and Description are required.");
@@ -458,7 +573,7 @@ function addSpecs() {
     var productId = document.getElementById("productId").value;
     var details = document.getElementById("details").value;
     var specs = document.getElementById("specs").value;
-    
+
     // Validate input values
     if (!details || !specs) {
         alert("Both Specs and Details are required.");
@@ -522,6 +637,7 @@ function deleteSpecs(specId, productId) {
 }
 
 
+<<<<<<< HEAD
 function addFeature() {
     // Retrieve form values
     var productId = document.getElementById("productId").value;
@@ -805,3 +921,6 @@ function deleteOffer(offerId, productId) {
 
 
 </script>
+=======
+</script>
+>>>>>>> 43b95d84d43eeab6cb38e0fe15725c2f40c9027a

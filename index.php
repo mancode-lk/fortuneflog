@@ -73,16 +73,7 @@
         </div>
     </div>
     <!-- End Slider Area -->
-    <div class="container">
-        <div class="card-customized">
-            <h2>Grand Collection of Antiques & Retro Treasures Coming Soon!</h2>
-            <p>
-                Discover, Sell & Own Timeless Treasures! <br>
-                A grand collection of antiques and retro masterpieces is coming soon!
-                Buy rare collectibles, sell your cherished antiques, and explore a world of timeless elegance. Stay tuned!
-            </p>
-        </div>
-    </div>
+
     <!-- Start Categorie Area  -->
     <div class="bg-color-white axil-section-gapcommon">
         <div class="container">
@@ -94,25 +85,9 @@
                     <div class="row row-cols-lg-5 row-cols-sm-3 row-cols-2">
                         <div class="col">
                             <div class="categrie-product categrie-product-4" data-sal="zoom-out" data-sal-delay="100" data-sal-duration="500">
-                                <a href="shop-sidebar.php" class="cate-thumb">
+                                <a href="shop.php" class="cate-thumb">
                                     <img src="./assets/images/product/categories/cat01.png" alt="Antique Furniture">
                                     <h5 class="cat-title">Antique Furniture</h5>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="categrie-product categrie-product-4" data-sal="zoom-out" data-sal-delay="100" data-sal-duration="500">
-                                <a href="shop-sidebar.php" class="cate-thumb">
-                                    <img src="./assets/images/product/categories/cat02.png" alt="Vintage Decor">
-                                    <h5 class="cat-title">Vintage Decor</h5>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="categrie-product categrie-product-4" data-sal="zoom-out" data-sal-delay="100" data-sal-duration="500">
-                                <a href="shop-sidebar.php" class="cate-thumb">
-                                    <img src="./assets/images/product/categories/cat03.png" alt="Retro Accessories">
-                                    <h5 class="cat-title">Retro Accessories</h5>
                                 </a>
                             </div>
                         </div>

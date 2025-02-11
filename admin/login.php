@@ -1,128 +1,173 @@
-<?php
-include 'backend/conn.php';
-?>
-
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="light" data-toggled="close">
-
+<html lang="en">
 <head>
-
-    <!-- Meta Data -->
     <meta charset="UTF-8">
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title> BIOGREENWRAP ADMIN PANEL </title>
-    <meta name="Description" content="Bootstrap Responsive Admin Web Dashboard HTML5 Template">
-    <meta name="Author" content="Spruko Technologies Private Limited">
-	<meta name="keywords" content="bootstrap template, template dashboard bootstrap, admin template, html admin panel template, bootstrap admin template, html and css templates, bootstrap, bootstrap html template, html admin dashboard template, bootstrap dashboard, admin panel html template">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortune Flog | Admin Portal</title>
 
-    <!-- Favicon -->
-    <link rel="icon" href="assets/images/brand-logos/favicon.ico" type="image/x-icon">
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <!-- Choices JS -->
-    <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    <!-- Main Theme Js -->
-    <script src="assets/js/main.js"></script>
+        body {
+            background: linear-gradient(135deg, #2b1b0f 0%, #4a3221 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-    <!-- Bootstrap Css -->
-    <link id="style" href="assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" >
+        .auth-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
 
-    <!-- Style Css -->
-    <link href="assets/css/styles.min.css" rel="stylesheet" >
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    <!-- Icons Css -->
-    <link href="assets/css/icons.css" rel="stylesheet" >
+        .brand-logo {
+            height: 80px;
+            margin-bottom: 1rem;
+        }
 
-    <!-- Node Waves Css -->
-    <link href="assets/libs/node-waves/waves.min.css" rel="stylesheet" >
+        .brand-title {
+            font-family: 'Playfair Display', serif;
+            color: #d4af37;
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
 
-    <!-- Simplebar Css -->
-    <link href="assets/libs/simplebar/simplebar.min.css" rel="stylesheet" >
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
 
-    <!-- Color Picker Css -->
-    <link rel="stylesheet" href="assets/libs/flatpickr/flatpickr.min.css">
-    <link rel="stylesheet" href="assets/libs/@simonwep/pickr/themes/nano.min.css">
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #d4af37;
+            font-size: 1.2rem;
+        }
 
-    <!-- Choices Css -->
-    <link rel="stylesheet" href="assets/libs/choices.js/public/assets/styles/choices.min.css">
+        .form-control {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
 
+        .form-control:focus {
+            border-color: #d4af37;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+        }
 
+        .auth-btn {
+            background: #d4af37;
+            color: #2b1b0f;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .auth-btn:hover {
+            background: #b38f28;
+            transform: scale(1.05);
+        }
+
+        .secondary-links {
+            margin-top: 1.5rem;
+        }
+
+        .secondary-links a {
+            color: #d4af37;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .secondary-links a:hover {
+            color: #b38f28;
+            text-decoration: underline;
+        }
+
+        .copyright {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+        }
+    </style>
 </head>
+<body>
+    <div class="auth-card">
+        <div class="brand-header">
+            <h1 class="brand-title">Admin Portal</h1>
+        </div>
 
-<body  class="login-img">
+        <form action="backend/login.php" method="POST">
+            <div class="input-group">
+                <i class="fa-solid fa-user input-icon"></i>
+                <input type="text" class="form-control" name="email" placeholder="Email" required>
+            </div>
 
-    <!-- Loader -->
-    <div id="loader" >
-        <img src="assets/images/media/loader.svg" alt="">
-    </div>
-    <!-- Loader -->
+            <div class="input-group">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
 
-    <div class="page">
-     	<!-- PAGE -->
-			<div class="page login-page">
-				<div>
-				    <!-- CONTAINER OPEN -->
-					<div class="container col col-login mx-auto mt-7">
-						<div class="text-center alert alert-warning">
-							BIOGREENWRAP ADMIN PANEL
-						</div>
-					</div>
-					<div class="container-login100">
-						<div class="card  wrap-login100 p-0">
-							<div class="card-body">
-								<form action="backend/login.php" class="login100-form validate-form">
-									<span class="login100-form-title">
-										Login
-									</span>
+            <button type="submit" class="auth-btn">Sign In</button>
 
-										<?php
-										if(isset($_SESSION['already_exist'])){
-											?>
-											<div class="alert alert-warning" role="alert">
-												User Exist, wait until admin aprove!
-											</div>
-											<?php
-											unset($_SESSION['already_exist']);
-										}
-										?>
-
-
-
-									<div class="wrap-input100 validate-input" data-bs-validate = "Valid email is required: ex@abc.xyz">
-                                        <input type="text" class="form-control input100" name="email" id="input" placeholder="Email">
-										<span class="focus-input100"></span>
-										<span class="symbol-input100">
-											<i class="ri-mail-fill" aria-hidden="true"></i>
-										</span>
-									</div>
-									<div class="wrap-input100 validate-input" data-bs-validate = "Password is required">
-                                        <input type="password" class="form-control input100" name="password" id="input2" placeholder="Password">
-										<span class="focus-input100"></span>
-										<span class="symbol-input100">
-											<i class="ri-lock-fill" aria-hidden="true"></i>
-										</span>
-									</div>
-									<div class="container-login100-form-btn">
-										<button type="submit" class="login100-form-btn btn-primary">
-											Login
-									</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-					<!-- CONTAINER CLOSED -->
-				</div>
-			</div>
-			<!-- End PAGE -->
-
-
-
-
+            <div class="secondary-links">
+                <a href="#forgot-password">Forgot Password?</a>
+            </div>
+        </form>
     </div>
 
-
+    <div class="copyright">
+        © 2025 Fortune Flog. All rights reserved.
+    </div>
 </body>
-
 </html>

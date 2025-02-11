@@ -29,16 +29,6 @@
 
 
         </div>
-        <div class="container">
-            <div class="card-customized">
-                <h2>Grand Collection of Antiques & Retro Treasures Coming Soon!</h2>
-                <p>
-                    Discover, Sell & Own Timeless Treasures! <br>
-                    A grand collection of antiques and retro masterpieces is coming soon!
-                    Buy rare collectibles, sell your cherished antiques, and explore a world of timeless elegance. Stay tuned!
-                </p>
-            </div>
-        </div>
 
         <!-- End Breadcrumb Area  -->
         <!-- Start Shop Area  -->

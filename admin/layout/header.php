@@ -83,12 +83,8 @@ if(!isset($_SESSION['admin_id'])){
                     <div class="header-element">
                         <div class="horizontal-logo">
                             <a href="index.php" class="header-logo">
-                                <img src="assets/images/brand-logos/desktop-logo.png" alt="logo" class="desktop-logo">
-                                <img src="assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo">
-                                <img src="assets/images/brand-logos/desktop-white.png" alt="logo" class="desktop-dark">
-                                <img src="assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-dark">
-                                <img src="assets/images/brand-logos/desktop-white.png" alt="logo" class="desktop-white">
-                                <img src="assets/images/brand-logos/toggle-white.png" alt="logo" class="toggle-white">
+                                <img src="https://fortuneflog.co.uk/assets/images/logo/logo.png" alt="logo" class="desktop-logo">
+																<img src="https://fortuneflog.co.uk/assets/images/favicon.png" alt="logo" class="toggle-logo">
                             </a>
                         </div>
                     </div>
@@ -173,9 +169,6 @@ if(!isset($_SESSION['admin_id'])){
                             <ul class="list-unstyled mb-0" id="header-notification-scroll1">
                                 <li class="dropdown-item">
                                     <div class="d-flex align-items-start">
-                                        <div class="pe-2">
-                                            <img src="assets/images/faces/1.jpg" alt="img" class="rounded-circle avatar">
-                                        </div>
                                         <div class="flex-grow-1 d-flex align-items-center justify-content-between">
                                             <div>
                                                 <p class="mb-0 fw-semibold"><a href="default-chat.php">Madeleine<span
@@ -219,7 +212,7 @@ if(!isset($_SESSION['admin_id'])){
                             data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                             <div class="d-flex align-items-center">
                                 <div class="">
-                                    <img src="assets/images/faces/9.jpg" alt="img"
+                                    <img src="https://fortuneflog.co.uk/assets/images/favicon.png" alt="img"
                                         class="rounded-circle avatar  profile-user brround cover-image">
                                 </div>
                             </div>
@@ -228,7 +221,7 @@ if(!isset($_SESSION['admin_id'])){
                         <ul class="main-header-dropdown dropdown-menu pt-0 overflow-hidden header-profile-dropdown dropdown-menu-end"
                             aria-labelledby="mainHeaderProfile">
                             <li><a class="dropdown-item d-flex" href="profile.php"><i
-                                        class="ti ti-user-circle fs-18 me-2 op-7"></i>Hotel Details</a></li>
+                                        class="ti ti-user-circle fs-18 me-2 op-7"></i>Profile</a></li>
                             <li><a class="dropdown-item d-flex" href="Faq.php"><i
                                         class="ti ti-headset fs-18 me-2 op-7"></i>Support</a></li>
                             <li><a class="dropdown-item d-flex" href="login.php"><i
@@ -247,12 +240,8 @@ if(!isset($_SESSION['admin_id'])){
             <!-- Start::main-sidebar-header -->
             <div class="main-sidebar-header">
                 <a href="index.php" class="header-logo">
-                    <img src="assets/images/brand-logos/desktop-logo.png" alt="logo" class="desktop-logo">
-                    <img src="assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo">
-                    <img src="assets/images/brand-logos/desktop-white.png" alt="logo" class="desktop-dark">
-                    <img src="assets/images/brand-logos/toggle-dark.png" alt="logo" class="toggle-dark">
-                    <img src="assets/images/brand-logos/desktop-white.png" alt="logo" class="desktop-white">
-                    <img src="assets/images/brand-logos/toggle-white.png" alt="logo" class="toggle-white">
+                    <img src="https://fortuneflog.co.uk/assets/images/logo/logo.png" style="height:50px;" alt="logo" class="desktop-logo">
+										<img src="https://fortuneflog.co.uk/assets/images/favicon.png" alt="logo" class="toggle-logo">
                 </a>
             </div>
             <!-- End::main-sidebar-header -->

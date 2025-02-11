@@ -5,7 +5,7 @@
         <footer class="footer mt-auto py-3 bg-white text-center">
             <div class="container">
                 <span class="text-muted"> Copyright © <span id="year"></span> <a
-                        href="javascript:void(0);" class="text-dark fw-semibold">BIOGREENWRAP</a>.
+                        href="javascript:void(0);" class="text-dark fw-semibold">fortuneflog</a>.
                     Designed with <span class="bi bi-heart-fill text-danger"></span> by <a target="_blank" href="https://mancode.lk/">
                         <span class="fw-semibold text-primary text-decoration-underline">Mancode</span>
                     </a> All
