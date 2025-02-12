@@ -1,3 +1,5 @@
+<?php include 'admin/backend/conn.php'; ?>
+
 <div class="axil-mainmenu">
     <div class="container-fluid">
         <div class="header-navbar">
@@ -23,11 +25,19 @@
                                 <i class="far fa-th-large"></i> Categories
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown-header-menu">
-                              <li><a class="dropdown-item" href="shop.php">Timepieces</a></li>
-                                <li><a class="dropdown-item" href="shop-sidebar.php">Vintage Decor</a></li>
-                                <li><a class="dropdown-item" href="shop-sidebar.php">Toys and Games</a></li>
-                                <li><a class="dropdown-item" href="shop-sidebar.php">Vintage Advertising</a></li>
-                                <li><a class="dropdown-item" href="shop-sidebar.php">Rare Prints and Manuscripts</a></li>
+                                <?php
+                                $sqlCat="SELECT * FROM tbl_categories";
+                                $rsCat=$conn->query($sqlCat);
+
+                                if($rsCat->num_rows>0){
+                                    while($rowsCat=$rsCat->fetch_assoc()){
+                                        ?>
+                                        
+                              <li><a class="dropdown-item" href="shop.php?cat_id=<?= $rowsCat['cat_id'] ?>"><?= $rowsCat['cat_name'] ?></a></li>
+                              <?php
+                                    }
+                                }
+                                ?>
                             </ul>
                         </li>
                         <li>

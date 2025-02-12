@@ -1,6 +1,14 @@
 <?php
     include 'layouts/header.php';
-?>
+
+    if(isset($_REQUEST['product_id'])){
+        $product_id=$_REQUEST['product_id'];
+        $sqlProduct="SELECT * FROM tbl_products WHERE p_id='$product_id'";
+        $rsProduct=$conn->query($sqlProduct);
+
+        if($rsProduct->num_rows==1){
+            $rowsProduct=$rsProduct->fetch_assoc();
+            ?>
 
     <main class="main-wrapper">
         <!-- Start Shop Area  -->
@@ -11,53 +19,56 @@
                         <div class="col-lg-7 mb--40">
                             <div class="row">
                                 <div class="col-lg-10 order-lg-2">
-                                    <div class="single-product-thumbnail-wrap zoom-gallery">
-                                        <div class="single-product-thumbnail product-large-thumbnail-3 axil-product">
-                                            <div class="thumbnail">
-                                                <a href="assets/images/product/product-big-01.png" class="popup-zoom">
-                                                    <img src="assets/images/product/product-big-01.png" alt="Product Images">
-                                                </a>
-                                            </div>
-                                            <div class="thumbnail">
-                                                <a href="assets/images/product/product-big-02.png" class="popup-zoom">
-                                                    <img src="assets/images/product/product-big-02.png" alt="Product Images">
-                                                </a>
-                                            </div>
-                                            <div class="thumbnail">
-                                                <a href="assets/images/product/product-big-03.png" class="popup-zoom">
-                                                    <img src="assets/images/product/product-big-03.png" alt="Product Images">
-                                                </a>
-                                            </div>
-                                            <div class="thumbnail">
-                                                <a href="assets/images/product/product-big-02.png" class="popup-zoom">
-                                                    <img src="assets/images/product/product-big-02.png" alt="Product Images">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="label-block">
-                                            <div class="product-badget">20% OFF</div>
-                                        </div>
-                                        <div class="product-quick-view position-view">
-                                            <a href="assets/images/product/product-big-01.png" class="popup-zoom">
-                                                <i class="far fa-search-plus"></i>
+                                <div class="single-product-thumbnail-wrap zoom-gallery">
+                                    <div class="single-product-thumbnail product-large-thumbnail-3 axil-product">
+                                        <?php 
+                                        // Get first image as default
+                                        $firstImage = 'admin/uploads/products/'.$rowsProduct['p_image']; // Default fallback
+                                        $sqlImages="SELECT * FROM tbl_images WHERE product_id='$product_id'";
+                                        $rsImages=$conn->query($sqlImages);
+                                       
+                                        ?>
+                                        <div class="thumbnail">
+                                            <a href="<?= $firstImage ?>" class="popup-zoom">
+                                                <img src="<?= $firstImage ?>" alt="Product Images" id="mainProductImage">
                                             </a>
                                         </div>
+                                    
                                     </div>
+                                    <div class="label-block">
+                                    <?php 
+                                    
+                                    // Add LIMIT 1 to get only the last entry
+                                    $sqlOffer = "SELECT * FROM tbl_offer WHERE product_id='$product_id' ORDER BY created_at DESC LIMIT 1";
+                                    $rsOffer = $conn->query($sqlOffer);
+                                    $offerPercent=0;
+                                    if ($rsOffer->num_rows > 0) {
+                                        $offer = $rsOffer->fetch_assoc(); // Fix typo here ("frtch" → "fetch")
+                                        $offerPercent=$offer['offer_percentage'];
+                                        ?>
+                                        <div class="product-badget"><?= $offer['offer_percentage'] ?>% OFF</div>
+                                        <?php
+                                    }
+
+                                     $current_price= $rowsProduct['p_price'] - ($rowsProduct['p_price']*$offerPercent)/100;
+                                    ?>
+                                        </div>
+                                </div>
                                 </div>
                                 <div class="col-lg-2 order-lg-1">
                                     <div class="product-small-thumb-3 small-thumb-wrapper">
-                                        <div class="small-thumb-img">
-                                            <img src="assets/images/product/product-thumb/thumb-08.png" alt="thumb image">
-                                        </div>
-                                        <div class="small-thumb-img">
-                                            <img src="assets/images/product/product-thumb/thumb-07.png" alt="thumb image">
-                                        </div>
-                                        <div class="small-thumb-img">
-                                            <img src="assets/images/product/product-thumb/thumb-09.png" alt="thumb image">
-                                        </div>
-                                        <div class="small-thumb-img">
-                                            <img src="assets/images/product/product-thumb/thumb-07.png" alt="thumb image">
-                                        </div>
+                                    <?php 
+                                    if($rsImages->num_rows > 0) {
+                                        while($rowsImages = $rsImages->fetch_assoc()) {
+                                            $imagePath = 'admin/uploads/products_more_images/' . $rowsImages['image_path'];
+                                            ?>
+                                            <div class="small-thumb-img" onclick="changeMainImage('<?= $imagePath ?>')">
+                                                <img src="<?= $imagePath ?>" alt="thumb image">
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                     </div>
                                 </div>
                             </div>
@@ -65,9 +76,9 @@
                         <div class="col-lg-5 mb--40">
                             <div class="single-product-content">
                                 <div class="inner">
-                                    <h2 class="product-title">3D™ Art Deco Items</h2>
-                                    <span class="price-amount">$155.00 - $255.00</span>
-                                    <div class="product-rating">
+                                    <h2 class="product-title"><?= $rowsProduct['p_title'] ?></h2>
+                                    <span class="price-amount">$<?= $current_price ?></span>
+                                    <!-- <div class="product-rating">
                                         <div class="star-rating">
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
@@ -78,41 +89,90 @@
                                         <div class="review-link">
                                             <a href="#">(<span>2</span> customer reviews)</a>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <ul class="product-meta">
-                                        <li><i class="fal fa-check"></i>In stock</li>
-                                        <li><i class="fal fa-check"></i>Free delivery available</li>
-                                        <li><i class="fal fa-check"></i>Sales 30% Off Use Code: MOTIVE30</li>
+
+                                    <?php 
+                                    $sqlFeatures="SELECT * FROM tbl_features WHERE product_id='$product_id'";
+                                    $rsFeatures=$conn->query($sqlFeatures);
+                                    if($rsFeatures->num_rows>0){
+                                        while($rowsFeatures=$rsFeatures->fetch_assoc()){
+                                            ?>
+                                            
+                                        <li><i class="fal fa-check"></i><?= $rowsFeatures['feature_text'] ?></li>
+                                        <?php
+                                        }
+                                    }else{
+                                        ?>
+                                         <li>No features added</li>
+                                        <?php
+
+                                    }
+                                    ?>
                                     </ul>
-                                    <p class="description">In ornare lorem ut est dapibus, ut tincidunt nisi pretium. Integer ante est, elementum eget magna. Pellentesque sagittis dictum libero, eu dignissim tellus.</p>
+                                    <!-- <p class="description">In ornare lorem ut est dapibus, ut tincidunt nisi pretium. Integer ante est, elementum eget magna. Pellentesque sagittis dictum libero, eu dignissim tellus.</p> -->
 
                                     <div class="product-variations-wrapper">
 
                                         <!-- Start Product Variation  -->
                                         <div class="product-variation">
-                                            <h6 class="title">Colors:</h6>
-                                            <div class="color-variant-wrapper">
-                                                <ul class="color-variant">
-                                                    <li class="color-extra-01 active"><span><span class="color"></span></span>
-                                                    </li>
-                                                    <li class="color-extra-02"><span><span class="color"></span></span>
-                                                    </li>
-                                                    <li class="color-extra-03"><span><span class="color"></span></span>
-                                                    </li>
-                                                </ul>
+                                                <h6 class="title">Colors:</h6>
+                                                <?php 
+                                                $sqlColor = "SELECT * FROM tbl_color WHERE product_id='$product_id'";
+                                                $rsColor = $conn->query($sqlColor);
+                                                if ($rsColor->num_rows > 0) {
+                                                ?>
+                                                <div class="color-variant-wrapper">
+                                                    <ul class="color-variant">
+                                                        <?php
+                                                        $colorIndex = 0;
+                                                        while ($rowsColor = $rsColor->fetch_assoc()) {
+                                                            $activeClass = $colorIndex === 0 ? 'active' : '';
+                                                        ?>
+                                                        <li class="color-extra-0<?= ($colorIndex+1) ?> <?= $activeClass ?>" 
+                                                            style="background-color: <?= htmlspecialchars($rowsColor['color_name']) ?>">
+                                                            <span>
+                                                                <span class="color"></span>
+                                                            </span>
+                                                        </li>
+                                                        <?php
+                                                            $colorIndex++;
+                                                        }
+                                                        ?>
+                                                    </ul>
+                                                </div>
+                                                <?php }else{
+                                                    ?>
+                                                    <li>No colors available</li>
+                                                    <?php
+                                                } ?>
                                             </div>
-                                        </div>
                                         <!-- End Product Variation  -->
 
                                         <!-- Start Product Variation  -->
                                         <div class="product-variation product-size-variation">
                                             <h6 class="title">Size:</h6>
+                                            <?php
+                                             $sqlSize="SELECT * FROM tbl_sizes WHERE product_id='$product_id'";
+                                             $rsSize=$conn->query($sqlSize);
+                                             ?>
+                                            
                                             <ul class="range-variant">
-                                                <li>xs</li>
-                                                <li>s</li>
-                                                <li>m</li>
-                                                <li>l</li>
-                                                <li>xl</li>
+                                            <?php
+                                             if($rsSize->num_rows>0){
+                                                 while($rowsSize=$rsSize->fetch_assoc()){
+                                                     ?>
+                                               
+                                                <li><?= $rowsSize['size'] ?></li>
+                                                <?php
+                                                 }
+                                             }else{
+                                                ?>
+                                                <li>No size available</li>
+                                                <?php
+                                             }
+                                            
+                                            ?>
                                             </ul>
                                         </div>
                                         <!-- End Product Variation  -->
@@ -127,7 +187,7 @@
 
                                         <!-- Start Product Action  -->
                                         <ul class="product-action d-flex-center mb--0">
-                                            <li class="add-to-cart"><a href="cart.html" class="axil-btn btn-bg-primary">Add to Cart</a></li>
+                                            <li class="add-to-cart"><a href="cart.php?product_id=<?= $product_id ?>" class="axil-btn btn-bg-primary">Add to Cart</a></li>
                                             <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
                                         </ul>
                                         <!-- End Product Action  -->
@@ -159,21 +219,28 @@
                         <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                             <div class="product-desc-wrapper">
                                 <div class="row">
+                                <?php 
+                                            $sqlDetails="SELECT * FROM tbl_advance_details WHERE product_id='$product_id'";
+                                            $rsDetails=$conn->query($sqlDetails);
+                                            if($rsDetails->num_rows>0){
+                                                while($rowsDetails=$rsDetails->fetch_assoc()){
+                                                    ?>
+
                                     <div class="col-lg-6 mb--30">
                                         <div class="single-desc">
-                                            <h5 class="title">Specifications:</h5>
-                                            <p>We’ve created a full-stack structure for our working workflow processes, were from the funny the century initial all the made, have spare to negatives. But the structure was from the funny the century rather,
-                                                initial all the made, have spare to negatives.</p>
+                                            <h5 class="title"><?= $rowsDetails['ad_heading'] ?></h5>
+                                            <p><?= $rowsDetails['ad_description'] ?></p>
                                         </div>
                                     </div>
-                                    <!-- End .col-lg-6 -->
-                                    <div class="col-lg-6 mb--30">
-                                        <div class="single-desc">
-                                            <h5 class="title">Care & Maintenance:</h5>
-                                            <p>Use warm water to describe us as a product team that creates amazing UI/UX experiences, by crafting top-notch user experience.</p>
-                                        </div>
-                                    </div>
-                                    <!-- End .col-lg-6 -->
+                                    
+                                    <?php
+                                                }
+                                            }else{
+                                                ?>
+                                                <?php
+                                            }
+                                            ?>
+                                    
                                 </div>
                                 <!-- End .row -->
                                 <div class="row">
@@ -210,50 +277,24 @@
                                 <div class="table-responsive">
                                     <table>
                                         <tbody>
+
+                                        <?php 
+                                            $sqlSpecs="SELECT * FROM tbl_specifications WHERE product_id='$product_id'";
+                                            $rsSpecs=$conn->query($sqlSpecs);
+                                            if($rsSpecs->num_rows>0){
+                                                while($rowsSpecs=$rsSpecs->fetch_assoc()){
+                                                    ?>
+                                                   
                                             <tr>
-                                                <th>Stand Up</th>
-                                                <td>35″L x 24″W x 37-45″H(front to back wheel)</td>
+                                                <th><?= $rowsSpecs['spec_name'] ?></th>
+                                                <td><?= $rowsSpecs['spec_value'] ?></td>
                                             </tr>
-                                            <tr>
-                                                <th>Folded (w/o wheels) </th>
-                                                <td>32.5″L x 18.5″W x 16.5″H</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Folded (w/ wheels) </th>
-                                                <td>32.5″L x 24″W x 18.5″H</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Door Pass Through </th>
-                                                <td>24</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Frame </th>
-                                                <td>Aluminum</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Weight (w/o wheels) </th>
-                                                <td>20 LBS</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Weight Capacity </th>
-                                                <td>60 LBS</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Width</th>
-                                                <td>24″</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Handle height (ground to handle) </th>
-                                                <td>37-45″</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Wheels</th>
-                                                <td>Aluminum</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Size</th>
-                                                <td>S, M, X, XL</td>
-                                            </tr>
+
+                                            <?php
+                                                }
+                                            }
+                                            ?>
+                                           
                                         </tbody>
                                     </table>
                                 </div>
@@ -421,6 +462,12 @@
         </div>
         <!-- End Shop Area  -->
 
+        <?php
+        }
+    }
+
+    
+?>
         <!-- Start Recently Viewed Product Area  -->
         <div class="axil-product-area bg-color-white axil-section-gap pb--50 pb_sm--30">
     <div class="container">
@@ -600,3 +647,24 @@
     <?php
     include 'layouts/footer.php';
 ?>
+
+<script>
+    function changeMainImage(newSrc) {
+    // Update main image
+    document.getElementById('mainProductImage').src = newSrc;
+    
+    // Update popup zoom link
+    document.querySelector('.popup-zoom').href = newSrc;
+    
+    // Update active thumbnail
+    document.querySelectorAll('.small-thumb-img').forEach(thumb => {
+        thumb.classList.remove('active-thumb');
+    });
+    event.currentTarget.classList.add('active-thumb');
+}
+
+// Initialize first thumbnail as active
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.small-thumb-img:first-child')?.classList.add('active-thumb');
+});
+</script>

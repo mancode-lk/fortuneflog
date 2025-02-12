@@ -7,7 +7,7 @@
                 <div class="card custom-card">
                     <div class="card-body">
                         <div class="container">
-                            <button class="btn btn-sm btn-success" onClick="openModelAddProducts()">Add Products</button>
+                            <button class="btn btn-sm btn-success" onclick="openModelAddProducts()">Add Products</button>
                         </div>
                     </div>
                     <div id="view_products"></div>
@@ -88,7 +88,7 @@
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-sm btn-warning"
-                                                            onclick="openModalEditProduct(<?= $productId ?>, '<?= $productTitle ?>', '<?= $productDescription ?>', <?= $rowProduct['p_price'] ?>, <?= $productAge ?>, <?= $rowProduct['p_type'] ?>)"
+                                                            onclick="openModalEditProduct(<?= $productId ?>, '<?= $productTitle ?>', '<?= $productDescription ?>', <?= $rowProduct['p_price'] ?>, <?= $productAge ?>, <?= $rowProduct['p_type'] ?>, <?= $rowProduct['p_categories'] ?>)"
                                                             >Edit</button>
                                                     <button class="btn btn-sm btn-danger" onclick="deleteProduct(<?= $productId ?>, '<?= $productTitle ?>')">Delete</button>
                                                 </td>
@@ -117,7 +117,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12 mb-3" id="add_category">
-                      <form method="post" action="backend/addProduct.php" enctype="multipart/form-data">
+                      <form method="post" action="backend/editProduct.php" enctype="multipart/form-data">
                         <input type="hidden" id="edit_product_id" name="product_id" value="">
                           <div class="form-group mb-3">
                               <label for="pTitle" class="form-label fw-semibold">Product Title</label>
@@ -129,6 +129,27 @@
                                   placeholder="Enter product title"
                                   required>
                           </div>
+
+                          <div class="form-group mb-3">
+                            <label for="pCat" class="form-label fw-semibold">Product Category</label>
+                            <select name="pCat" id="edit_pCat" class="form-control shadow-sm border-primary">
+                                <option value="">Select category</option>
+                                <?php
+                                
+
+                                $sqlCat = "SELECT * FROM tbl_categories";
+                                $rsCat = $conn->query($sqlCat);
+
+                                if ($rsCat->num_rows > 0) {
+                                    while ($rowsCat = $rsCat->fetch_assoc()) {
+                                        ?>
+                                        <option value="<?= $rowsCat['cat_id'] ?>"><?= htmlspecialchars($rowsCat['cat_name']) ?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
                           <div class="form-group mb-3">
                               <label for="pDescription" class="form-label fw-semibold">Product Description</label>
                               <textarea
@@ -218,7 +239,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-12 mb-3" id="add_category">
+                    <div class="col-lg-12 mb-3" id="add_categories">
                         <!-- Additional dynamic content will be loaded here -->
                     </div>
                 </div>
@@ -306,7 +327,7 @@
 
 <script>
 
-function openModalEditProduct(productId, productTitle, productDescription, productPrice, productAge, productType) {
+function openModalEditProduct(productId, productTitle, productDescription, productPrice, productAge, productType,productCatogory) {
 
     $('#editProductModal').modal('show');
 
@@ -316,6 +337,7 @@ function openModalEditProduct(productId, productTitle, productDescription, produ
     document.getElementById("edit_pPrice").value = productPrice;
     document.getElementById("edit_pAge").value = productAge;
     document.getElementById("edit_pType").value = productType;
+    document.getElementById("edit_pCat").value = productCatogory;
 }
 
 function openAddMoreImagesModal(productId) {
@@ -414,7 +436,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function openModelAddProducts() {
     $('#showModal').modal('show');
-    $('#add_category').load('ajax/addProducts.php');
+    $('#add_categories').load('ajax/addProducts.php');
 
 }
 

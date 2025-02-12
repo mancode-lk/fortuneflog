@@ -1,3 +1,6 @@
+<?php
+include "../backend/conn.php"; // Ensure connection is included
+?>
 <div class="container card shadow-lg p-4 mt-4">
     <div class="text-center mb-4">
         <h4 class="modal-title fw-bold text-primary">Add Product</h4>
@@ -14,6 +17,28 @@
                 placeholder="Enter product title" 
                 required>
         </div>
+        
+        <div class="form-group mb-3">
+            <label for="pCat" class="form-label fw-semibold">Product Category</label>
+            <select name="pCat" id="pCat" class="form-control shadow-sm border-primary">
+                <option value="">Select category</option>
+                <?php
+                
+
+                $sqlCat = "SELECT * FROM tbl_categories";
+                $rsCat = $conn->query($sqlCat);
+
+                if ($rsCat->num_rows > 0) {
+                    while ($rowsCat = $rsCat->fetch_assoc()) {
+                        ?>
+                        <option value="<?= $rowsCat['cat_id'] ?>"><?= htmlspecialchars($rowsCat['cat_name']) ?></option>
+                        <?php
+                    }
+                }
+                ?>
+            </select>
+        </div>
+
         <div class="form-group mb-3">
             <label for="pImage" class="form-label fw-semibold">Product Image</label>
             <input 

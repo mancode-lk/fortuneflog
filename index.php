@@ -1,5 +1,7 @@
 <?php
     include 'layouts/header.php';
+    
+  
 ?>
 <main class="main-wrapper">
     <!-- Start Slider Area -->
@@ -83,17 +85,32 @@
             <div class="categrie-product-activation-4 slick-layout-wrapper--15 axil-slick-angle angle-top-slide">
                 <div class="slick-single-layout">
                     <div class="row row-cols-lg-5 row-cols-sm-3 row-cols-2">
-                        <div class="col">
+
+                    <?php
+                                $sqlCat="SELECT * FROM tbl_categories";
+                                $rsCat=$conn->query($sqlCat);
+
+                                if($rsCat->num_rows>0){
+                                    while($rowsCat=$rsCat->fetch_assoc()){
+                                        ?>
+                                       
+                        <div class="col-lg-3">
                             <div class="categrie-product categrie-product-4" data-sal="zoom-out" data-sal-delay="100" data-sal-duration="500">
-                                <a href="shop.php" class="cate-thumb">
-                                    <img src="./assets/images/product/categories/cat01.png" alt="Antique Furniture">
-                                    <h5 class="cat-title">Antique Furniture</h5>
+                                <a href="shop.php?cat_id=<?= $rowsCat['cat_id'] ?>" class="cate-thumb">
+                                    <img src="admin/uploads/categories/<?= $rowsCat['cat_image'] ?>" alt="Antique Furniture">
+                                    <h5 class="cat-title"><?= $rowsCat['cat_name'] ?></h5>
                                 </a>
                             </div>
                         </div>
+
+                        <?php
+                                    }
+                                }
+                                ?>
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
     <!-- End Categorie Area  -->

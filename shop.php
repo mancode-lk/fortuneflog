@@ -1,5 +1,7 @@
 <?php
     include 'layouts/header.php';
+
+   
 ?>
 
     <main class="main-wrapper">
@@ -42,16 +44,22 @@
                                     <div class="category-select">
 
                                         <!-- Start Single Select  -->
-                                        <select class="single-select">
-    <option>Categories</option>
-    <option>Victorian Furniture</option>
-    <option>Art Deco Items</option>
-    <option>Vintage Jewelry</option>
-    <option>Retro Fashion</option>
-    <option>Antique Clocks and Watches</option>
-    <option>Historical Memorabilia</option>
-    <option>Rare Books and Manuscripts</option>
-</select>
+                                        <select class="single-select" onchange="loadProducts(this.value)">
+                                        <option>Categories</option>
+                                        <?php
+                                        $sqlCat="SELECT * FROM tbl_categories";
+                                        $rsCat=$conn->query($sqlCat);
+
+                                        if($rsCat->num_rows>0){
+                                            while($rowsCat=$rsCat->fetch_assoc()){
+                                               ?>
+                                        <option value="<?= $rowsCat['cat_id'] ?>"><?= $rowsCat['cat_name'] ?></option>
+                                        
+                                        <?php 
+                                            }
+                                        }
+                                        ?>
+                                    </select>
 
                                         <!-- End Single Select  -->
 
@@ -68,54 +76,17 @@
 
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <div class="category-select mt_md--10 mt_sm--10 justify-content-lg-end">
-                                        <!-- Start Single Select  -->
-                                        <select class="single-select">
-                                            <option>Sort by Latest</option>
-                                            <option>Sort by Name</option>
-                                            <option>Sort by Price</option>
-                                            <option>Sort by Viewed</option>
-                                        </select>
-                                        <!-- End Single Select  -->
-                                    </div>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row row--15">
-                    <div class="col-xl-3 col-lg-4 col-sm-6">
-                        <div class="axil-product product-style-one has-color-pick mt--40">
-                            <div class="thumbnail">
-                                <a href="single-product-3.php">
-                                    <img src="assets/images/product/electric/product-01.png" alt="Product Images">
-                                </a>
-                                <div class="label-block label-right">
-                                    <div class="product-badget">20% OFF</div>
-                                </div>
-                                <div class="product-hover-action">
-                                    <ul class="cart-action">
-                                        <li class="wishlist"><a href="wishlist.php"><i class="far fa-heart"></i></a></li>
-                                        <li class="select-option"><a href="cart.php">Add to Cart</a></li>
-                                        <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-content">
-                                <div class="inner">
-                                    <h5 class="title"><a href="single-product-3.php">3D™ Art Deco Items</a></h5>
-                                    <div class="product-price-variant">
-                                        <span class="price current-price">$230</span>
-                                        <span class="price old-price">$530</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="viewProducts">
+
                 </div>
+
                 <div class="text-center pt--30">
-                    <a href="#" class="axil-btn btn-bg-lighter btn-load-more">Load more</a>
+                    <a onclick="loadMore()" class="axil-btn btn-bg-lighter btn-load-more">Load more</a>
                 </div>
             </div>
             <!-- End .container -->
@@ -197,3 +168,69 @@
     <?php
       include 'layouts/footer.php';
   ?>
+
+<script>
+
+$(document).ready(function() {
+    let page = 1; // Initialize page counter
+    
+    // Initial load
+    loadProducts(page);
+
+    // Load products function with pagination
+    window.loadProducts = function(pageNumber) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const catId = urlParams.get('cat_id');
+        let url = `ajax/viewProducts.php?page=${pageNumber}`;
+        
+        if (catId) {
+            url += `&cat_id=${encodeURIComponent(catId)}`;
+        }
+
+        $.get(url, function(data) {
+            if (pageNumber === 1) {
+                $('#viewProducts').html(data);
+            } else {
+                $('#viewProducts').append(data);
+            }
+            
+            // Hide load more button if no more results
+            if (data.trim().length === 0) {
+                $('.btn-load-more').hide();
+            }
+        });
+    };
+
+    // Load more button handler
+    window.loadMore = function() {
+        page++;
+        loadProducts(page);
+    };
+});
+
+
+            $(document).ready(function() {
+                // Get URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                const catId = urlParams.get('cat_id');
+
+                // Build the URL for AJAX load
+                let loadUrl = 'ajax/viewProducts.php';
+                if (catId) {
+                    loadUrl += '?cat_id=' + encodeURIComponent(catId);
+                }
+
+                // Load products dynamically
+                $('#viewProducts').load(loadUrl);
+            });
+
+
+            function loadProducts(catId) {
+                let url = 'ajax/viewProducts.php';
+                if (catId && catId !== 'Categories') {
+                    url += '?cat_id=' + encodeURIComponent(catId);
+                }
+                $('#viewProducts').load(url);
+            }
+
+</script>
