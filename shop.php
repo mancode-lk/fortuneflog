@@ -45,18 +45,12 @@
 
                                         <!-- Start Single Select  -->
                                         <select class="single-select" onchange="loadProducts(this.value)">
-                                        <option>Categories</option>
+                                        <option value="">All Categories</option>
                                         <?php
-                                        $sqlCat="SELECT * FROM tbl_categories";
-                                        $rsCat=$conn->query($sqlCat);
-
-                                        if($rsCat->num_rows>0){
-                                            while($rowsCat=$rsCat->fetch_assoc()){
-                                               ?>
-                                        <option value="<?= $rowsCat['cat_id'] ?>"><?= $rowsCat['cat_name'] ?></option>
-                                        
-                                        <?php 
-                                            }
+                                        $rsCat = $conn->query("SELECT * FROM tbl_categories");
+                                        while ($row = $rsCat->fetch_assoc()) {
+                                            $selected = ($row['cat_id'] == $_GET['cat_id']) ? 'selected' : '';
+                                            echo "<option value='{$row['cat_id']}' $selected>{$row['cat_name']}</option>";
                                         }
                                         ?>
                                     </select>
@@ -112,6 +106,20 @@
         </div>
         <!-- End Axil Newsletter Area  -->
     </main>
+
+
+    
+<!-- Product Quick View Modal Start -->
+<div class="modal fade quick-view-product" id="quick-view-modal" tabindex="-1" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+        <div id="product_detail">
+
+        </div>
+        
+    </div>
+</div>
+<!-- Product Quick View Modal End -->
 
 
     <div class="service-area">
@@ -170,21 +178,14 @@
   ?>
 
 <script>
-
 $(document).ready(function() {
-    let page = 1; // Initialize page counter
-    
-    // Initial load
-    loadProducts(page);
+    let currentPage = 1;
+    let currentCategory = new URLSearchParams(window.location.search).get('cat_id') || '';
 
-    // Load products function with pagination
-    window.loadProducts = function(pageNumber) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const catId = urlParams.get('cat_id');
+    function loadProducts(pageNumber, category) {
         let url = `ajax/viewProducts.php?page=${pageNumber}`;
-        
-        if (catId) {
-            url += `&cat_id=${encodeURIComponent(catId)}`;
+        if (category && category !== 'Categories') {
+            url += `&cat_id=${encodeURIComponent(category)}`;
         }
 
         $.get(url, function(data) {
@@ -193,44 +194,41 @@ $(document).ready(function() {
             } else {
                 $('#viewProducts').append(data);
             }
-            
+
             // Hide load more button if no more results
-            if (data.trim().length === 0) {
-                $('.btn-load-more').hide();
-            }
-        });
+            $('.btn-load-more').toggle(data.trim().length > 0);
+        }).fail(() => $('.btn-load-more').hide());
+    }
+
+    // Initial load
+    loadProducts(currentPage, currentCategory);
+
+    // Handle category change
+    window.loadProducts = function(catId) {
+        currentCategory = catId;
+        currentPage = 1;
+        const url = new URL(window.location);
+        catId !== 'Categories' 
+            ? url.searchParams.set('cat_id', catId)
+            : url.searchParams.delete('cat_id');
+        history.pushState({}, '', url);
+        loadProducts(currentPage, currentCategory);
     };
 
-    // Load more button handler
-    window.loadMore = function() {
-        page++;
-        loadProducts(page);
-    };
+    // Handle load more
+    window.loadMore = () => loadProducts(++currentPage, currentCategory);
+
+    // Handle browser navigation
+    window.addEventListener('popstate', () => {
+        currentCategory = new URLSearchParams(window.location.search).get('cat_id') || '';
+        currentPage = 1;
+        loadProducts(currentPage, currentCategory);
+    });
 });
 
-
-            $(document).ready(function() {
-                // Get URL parameters
-                const urlParams = new URLSearchParams(window.location.search);
-                const catId = urlParams.get('cat_id');
-
-                // Build the URL for AJAX load
-                let loadUrl = 'ajax/viewProducts.php';
-                if (catId) {
-                    loadUrl += '?cat_id=' + encodeURIComponent(catId);
-                }
-
-                // Load products dynamically
-                $('#viewProducts').load(loadUrl);
-            });
-
-
-            function loadProducts(catId) {
-                let url = 'ajax/viewProducts.php';
-                if (catId && catId !== 'Categories') {
-                    url += '?cat_id=' + encodeURIComponent(catId);
-                }
-                $('#viewProducts').load(url);
-            }
+function openProductModal(product_id){
+    $('#quick-view-modal').modal('show');
+    $('#product_detail').load('ajax/product_detail.php',{product_id:product_id});
+}
 
 </script>

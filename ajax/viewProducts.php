@@ -1,21 +1,25 @@
               
               
-              <?php 
-              include '../admin/backend/conn.php'; // Adjust path as needed
+          <?php 
+            include '../admin/backend/conn.php';
 
-              $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-              $itemsPerPage = 4; // Number of items per page
-              $offset = ($page - 1) * $itemsPerPage;
-              
-              if(isset($_GET['cat_id'])){
-                  $cat_id = $_GET['cat_id'];
-                  $sql = "SELECT * FROM tbl_products WHERE p_categories='$cat_id' LIMIT $itemsPerPage OFFSET $offset";
-              } else {
-                  $sql = "SELECT * FROM tbl_products LIMIT $itemsPerPage OFFSET $offset";
-              }
-              
-              $result = $conn->query($sql);
-              ?>
+            $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+            $itemsPerPage = 4;
+            $offset = ($page - 1) * $itemsPerPage;
+
+            $cat_id = isset($_GET['cat_id']) ? $_GET['cat_id'] : null;
+
+            if ($cat_id) {
+                $stmt = $conn->prepare("SELECT * FROM tbl_products WHERE p_categories = ? LIMIT ? OFFSET ?");
+                $stmt->bind_param("iii", $cat_id, $itemsPerPage, $offset);
+            } else {
+                $stmt = $conn->prepare("SELECT * FROM tbl_products LIMIT ? OFFSET ?");
+                $stmt->bind_param("ii", $itemsPerPage, $offset);
+            }
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            ?>
               
               <div class="row row--15">
 
@@ -51,7 +55,11 @@
                                     <ul class="cart-action">
                                         <li class="wishlist"><a href="wishlist.php"><i class="far fa-heart"></i></a></li>
                                         <li class="select-option"><a href="cart.php">Add to Cart</a></li>
-                                        <li class="quickview"><a href="#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
+                                        <li class="quickview">
+                                        <a onclick="openProductModal(<?= $product_id ?>)" data-bs-toggle="modal">
+                                            <i class="far fa-eye"></i>
+                                        </a>
+                                    </li>
                                     </ul>
                                 </div>
                             </div>
