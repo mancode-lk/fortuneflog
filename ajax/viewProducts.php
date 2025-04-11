@@ -1,6 +1,6 @@
-              
-              
-          <?php 
+
+
+          <?php
             include '../admin/backend/conn.php';
 
             $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -20,7 +20,7 @@
             $stmt->execute();
             $result = $stmt->get_result();
             ?>
-              
+
               <div class="row row--15">
 
               <?php
@@ -35,8 +35,8 @@
                                     <img src="admin/uploads/products/<?= $rows['p_image'] ?>" alt="Product Images">
                                 </a>
                                 <div class="label-block label-right">
-                                <?php 
-                                    
+                                <?php
+
                                     // Add LIMIT 1 to get only the last entry
                                     $sqlOffer = "SELECT * FROM tbl_offer WHERE product_id='$product_id' ORDER BY created_at DESC LIMIT 1";
                                     $rsOffer = $conn->query($sqlOffer);
@@ -49,7 +49,7 @@
                                         <?php
                                     }
                                     ?>
-                                   
+
                                 </div>
                                 <div class="product-hover-action">
                                     <ul class="cart-action">
@@ -69,15 +69,15 @@
                                     <div class="product-price-variant">
                                         <?php $current_price= $rows['p_price'] - ($rows['p_price']*$offerPercent)/100; ?>
 
-                                        <span class="price current-price">$<?= $current_price ?></span>
-                                        <span class="price old-price">$<?= $rows['p_price'] ?></span>
+                                        <span class="price current-price">£<?= $current_price ?></span>
+                                        <span class="price old-price">£<?= $rows['p_price'] + 100 ?></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    
+
                     <?php
                     }
                 }else{

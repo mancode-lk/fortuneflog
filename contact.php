@@ -17,13 +17,6 @@
                             <h1 class="title">Contact With Us</h1>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-4">
-                        <div class="inner">
-                            <div class="bradcrumb-thumb">
-                                <img src="assets/images/product/product-45.png" alt="Image">
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -79,13 +72,7 @@
                                 <span class="address mb--20">Unit 82a James Carter Road, Mildenhall,
 Bury St. Edmunds, England, IP28 7DE</span>
                                 <span class="phone">Phone: 07497190248</span>
-                                <span class="email">Email: Hello@etrade.com</span>
-                            </div>
-                            <div class="opening-hour">
-                                <h4 class="title mb--20">Opening Hours:</h4>
-                                <p>Monday to Saturday: 9am - 10pm
-                                    <br> Sundays: 10am - 6pm
-                                </p>
+                                <span class="email">Email: info@fortuneflog.co.uk</span>
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,5 @@
 <?php
     include 'layouts/header.php';
-
-   
 ?>
 
     <main class="main-wrapper">
@@ -70,7 +68,7 @@
 
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -108,7 +106,7 @@
     </main>
 
 
-    
+
 <!-- Product Quick View Modal Start -->
 <div class="modal fade quick-view-product" id="quick-view-modal" tabindex="-1" aria-hidden="true">
 
@@ -116,7 +114,7 @@
         <div id="product_detail">
 
         </div>
-        
+
     </div>
 </div>
 <!-- Product Quick View Modal End -->
@@ -208,7 +206,7 @@ $(document).ready(function() {
         currentCategory = catId;
         currentPage = 1;
         const url = new URL(window.location);
-        catId !== 'Categories' 
+        catId !== 'Categories'
             ? url.searchParams.set('cat_id', catId)
             : url.searchParams.delete('cat_id');
         history.pushState({}, '', url);

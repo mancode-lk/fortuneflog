@@ -35,7 +35,7 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $sqlProducts = "SELECT * FROM tbl_products";
+                                    $sqlProducts = "SELECT * FROM tbl_products ORDER BY p_id DESC";
                                     $rsProducts = $conn->query($sqlProducts);
 
                                     if ($rsProducts->num_rows > 0) {
@@ -135,7 +135,7 @@
                             <select name="pCat" id="edit_pCat" class="form-control shadow-sm border-primary">
                                 <option value="">Select category</option>
                                 <?php
-                                
+
 
                                 $sqlCat = "SELECT * FROM tbl_categories";
                                 $rsCat = $conn->query($sqlCat);

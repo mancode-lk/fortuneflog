@@ -8,6 +8,10 @@ $username = "root";
 $password = "";
 $dbname = "db_fortuneflog";
 
+// $servername = "localhost";
+// $username = "mancode_fortune_admin";
+// $password = "X&P.{,Sbw0Uy";
+// $dbname = "mancode_fortuneflog";
 
 
 $current_date_time = date('Y/m/d H:i:s');

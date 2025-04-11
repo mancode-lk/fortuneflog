@@ -32,7 +32,7 @@
                                 if($rsCat->num_rows>0){
                                     while($rowsCat=$rsCat->fetch_assoc()){
                                         ?>
-                                        
+
                               <li><a class="dropdown-item" href="shop.php?cat_id=<?= $rowsCat['cat_id'] ?>"><?= $rowsCat['cat_name'] ?></a></li>
                               <?php
                                     }
@@ -67,7 +67,7 @@
                     </li>
                     <li class="shopping-cart">
                         <a href="#" class="cart-dropdown-btn">
-                            <span class="cart-count">2</span>
+                            <span class="cart-count">0</span>
                             <i class="far fa-shopping-cart"></i>
                         </a>
                     </li>

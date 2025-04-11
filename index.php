@@ -1,7 +1,7 @@
 <?php
     include 'layouts/header.php';
-    
-  
+
+
 ?>
 <main class="main-wrapper">
     <!-- Start Slider Area -->
@@ -23,8 +23,8 @@
                         </div>
                         <div class="banner-product">
                             <div class="product-details">
-                                <h4 class="title"><a href="single-product-8.php">Discover Unique Pcs here</a></h4>
-                                <div class="price"> $25.00 - $50.00 (sample) </div>
+                                <h4 class="title"><a href="shop.php">Discover Unique Pcs here</a></h4>
+                                <div class="price"> £25.00 - £50.00 (sample) </div>
                                 <div class="product-rating">
                                     <span class="icon">
                                         <i class="fas fa-star"></i>
@@ -93,7 +93,7 @@
                                 if($rsCat->num_rows>0){
                                     while($rowsCat=$rsCat->fetch_assoc()){
                                         ?>
-                                       
+
                         <div class="col-lg-3">
                             <div class="categrie-product categrie-product-4" data-sal="zoom-out" data-sal-delay="100" data-sal-duration="500">
                                 <a href="shop.php?cat_id=<?= $rowsCat['cat_id'] ?>" class="cate-thumb">
@@ -110,11 +110,11 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
     <!-- End Categorie Area  -->
-    <div class="product-collection-area bg-lighter axil-section-gapcommon">
+    <!-- <div class="product-collection-area bg-lighter axil-section-gapcommon">
         <div class="container">
             <div class="section-title-border">
                 <h2 class="title">Today’s Best Deals 💥</h2>
@@ -200,7 +200,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Start Expolre Product Area  -->
     <br><br>
